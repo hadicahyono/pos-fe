@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 
-function App() {
+const App = () => {
   let getLocalStorage = localStorage.getItem("pos_login");
   const keepLogin = async () => {
     try {
@@ -38,6 +38,6 @@ function App() {
       </Routes>
     </>
   );
-}
+};
 
 export default App;
