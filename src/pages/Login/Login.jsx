@@ -14,11 +14,17 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginAction } from "../../redux/actions/userAction";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +37,9 @@ const Login = (props) => {
 
       if (data.success) {
         alert(data.message);
-        window.location = "/";
+        dispatch(loginAction(data));
+        localStorage.setItem("pos_login", data.token);
+        navigate("/", { replace: true });
       } else {
         setError(data.message);
         console.log(error);
@@ -49,7 +57,7 @@ const Login = (props) => {
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize={"4xl"}>Sign in to your account</Heading>
+          <Heading fontSize={"4xl"}>Login to your account</Heading>
           <Text>{error && <p>{error}</p>}</Text>
         </Stack>
         <Box
